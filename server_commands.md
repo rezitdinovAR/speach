@@ -301,3 +301,8 @@ conda update -n base conda
 ```bash
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
+
+## Download from yandex disk
+```bash
+curl -H "Authorization: OAuth YANDEX_DISK_TOKEN" -L -o current_data.rar "https://downloader.disk.yandex.ru/disk/..."
+```
