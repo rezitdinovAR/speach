@@ -5,7 +5,6 @@ import re
 import torchaudio
 from torch.utils.data import Dataset
 
-
 class IPS1ASRDataset(Dataset):
     def __init__(self, audio_dir: str):
         self.audio_dir = audio_dir
@@ -40,12 +39,18 @@ class IPS1ASRDataset(Dataset):
     def __getitem__(self, index: int):
         audio_sample_path = self._get_audio_sample_path(index)
         label = self._get_audio_sample_label(index)
-        # signal, sample_rate = torchaudio.load(audio_sample_path)
-        return audio_sample_path, label
+        signal, sample_rate = torchaudio.load(audio_sample_path)
+
+        return (signal, sample_rate, label, 0, 0, 0)
+
+    def get_metadata(self, index):
+        audio_sample_path = self._get_audio_sample_path(index)
+        label = self._get_audio_sample_label(index)
+        signal, sample_rate = torchaudio.load(audio_sample_path)
+        return (audio_sample_path, sample_rate, label, 0, 0, 0)
 
 
 if __name__ == '__main__':
     ips_dataset = IPS1ASRDataset('../tatar_tts/')
     print('ips_dataset[0] =', ips_dataset[0])
     print('len ips_dataset =', len(ips_dataset))
-
