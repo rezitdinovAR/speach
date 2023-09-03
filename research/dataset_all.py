@@ -2,30 +2,27 @@ import os
 import re
 
 
-import pandas as pd
 import torchaudio
 from torch.utils.data import Dataset
 
-
-from utils import clean_text
-
-
 class IPS1ASRDataset(Dataset):
-    def __init__(self, audio_dir: str, only_char=True):
+    def __init__(self, audio_dir: str):
         self.audio_dir = audio_dir
-        df = pd.read_csv(audio_dir[:-1] + '.csv', index_col='id')
         self.data = {}
+        names = set()
         counter = 0
-        for row in df.itertuples():
-            self.data[counter] = {
-                'text': str(row[0]) + '.txt',
-                'audio': str(row[0]) + '.wav'
-            }
-            counter += 1
+        for filename in os.listdir(self.audio_dir):
+            name = os.path.splitext(filename)[0]
+            if name not in names:
+                self.data[counter] = {
+                    'text': name + '.txt',
+                    'audio': name + '.wav'
+                }
+                counter += 1
+                names.add(name)
         self.len = counter
-        self.only_char = only_char
+        del names
         del counter
-        del df
 
     def __len__(self):
         return self.len
@@ -36,7 +33,7 @@ class IPS1ASRDataset(Dataset):
     def _get_audio_sample_label(self, index):
         label_path = self.audio_dir + self.data[index]['text']
         with open(label_path, 'r') as f:
-            label = clean_text(f.read()) if self.only_char else f.read() # Не учитывает ошибки в заполнение .txt
+            label = f.read() # Не учитывает ошибки в заполнение .txt
         return label
 
     def __getitem__(self, index: int):
@@ -51,9 +48,3 @@ class IPS1ASRDataset(Dataset):
         label = self._get_audio_sample_label(index)
         signal, sample_rate = torchaudio.load(audio_sample_path)
         return (audio_sample_path, sample_rate, label, 0, 0, 0)
-
-
-if __name__ == '__main__':
-    ips_dataset = IPS1ASRDataset('../tatar_tts/')
-    print('ips_dataset[0] =', ips_dataset[0])
-    print('len ips_dataset =', len(ips_dataset))

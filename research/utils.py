@@ -1,4 +1,12 @@
+import re
 import numpy as np
+
+def clean_text(text: str) -> str:
+    text = re.sub(r'[^\w\s]', ' ', text)
+    _RE_COMBINE_WHITESPACE = re.compile(r"\s+")
+    text = _RE_COMBINE_WHITESPACE.sub(" ", text).strip()
+
+    return text.lower()
 
 
 def avg_wer(wer_scores, combined_ref_len):
