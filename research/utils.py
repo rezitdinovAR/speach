@@ -3,6 +3,7 @@ import numpy as np
 
 def clean_text(text: str) -> str:
     text = re.sub(r'[^\w\s]', ' ', text)
+    text = re.sub("\d+", " ", text)
     _RE_COMBINE_WHITESPACE = re.compile(r"\s+")
     text = _RE_COMBINE_WHITESPACE.sub(" ", text).strip()
 

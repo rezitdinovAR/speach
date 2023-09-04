@@ -13,13 +13,13 @@ from utils import clean_text
 class IPS1ASRDataset(Dataset):
     def __init__(self, audio_dir: str, only_char=True):
         self.audio_dir = audio_dir
-        df = pd.read_csv(audio_dir[:-1] + '.csv', index_col='id')
+        df = pd.read_csv(audio_dir[:-1] + '.csv', dtype=str)
         self.data = {}
         counter = 0
         for row in df.itertuples():
             self.data[counter] = {
-                'text': str(row[0]) + '.txt',
-                'audio': str(row[0]) + '.wav'
+                'text': str(row[2]) + '.txt',
+                'audio': str(row[2]) + '.wav'
             }
             counter += 1
         self.len = counter
