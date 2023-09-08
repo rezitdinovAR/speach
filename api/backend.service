@@ -1,0 +1,14 @@
+[Unit]
+Description=Gunicorn Daemon tatar-asr
+After=network.target
+
+
+[Service]
+User=asr
+WorkingDirectory=/home/asr/projects/speach/api/
+ExecStart=/home/myuser/.conda/envs/my_env/bin/python app/app.py
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target

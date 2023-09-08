@@ -89,7 +89,7 @@ sudo apt upgrade -y;
 
 ### Установка необходимых пакетов
 ```bash
-sudo apt install git nginx gunicorn supervisor postgresql
+sudo apt install git nginx gunicorn 
 ```
 
 ## Безопасность
@@ -164,7 +164,7 @@ python3.11 --version
 ## Установка Anaconda
 ### Download the latest shell script to Ubuntu 18.04
 ```bash 
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+wget https://repo.anaconda.com/archive/Anaconda3-2023.07-2-Linux-x86_64.sh
 ```
 ### Make the miniconda installation script executable
 ```bash
