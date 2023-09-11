@@ -1,17 +1,23 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,  File, UploadFile
 
-from .asr import TatAsr
-from .models import Audio
+from asr import TatAsr
 
 router = APIRouter()
 
 tat_asr = TatAsr()
 
-@router.get('/listening/', response_model=Audio)
-async def listening(base64_wav: str) -> dict:
+@router.post('/listening/')
+async def listening(file: UploadFile = File(...)) -> dict:
     '''Аудирование - изучение татарских слов'''
-    file_path = tat_asr.base64_to_wav(base64_wav)
-    text = await tat_asr.predict(file_path)
+    try:
+        contents = file.file.read()
+        with open(file.filename, 'wb') as f:
+            f.write(contents)
+    except Exception:
+        return {"message": "There was an error uploading the file"}
+    finally:
+        file.file.close()
+    text = await tat_asr.predict(file.filename)
 
     return {
         'text': text

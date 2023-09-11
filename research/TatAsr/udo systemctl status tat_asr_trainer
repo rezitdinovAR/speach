@@ -1,0 +1,20 @@
+[0;1;32m●[0m tat_asr_trainer.service - Gunicorn Daemon tatar-asr
+   Loaded: loaded (/lib/systemd/system/tat_asr_trainer.service; enabled; vendor preset: enabled)
+   Active: [0;1;32mactive (running)[0m since Mon 2023-09-11 20:24:26 UTC; 17s ago
+ Main PID: 13532 (python)
+    Tasks: 58 (limit: 4915)
+   CGroup: /system.slice/tat_asr_trainer.service
+           ├─13532 /home/asr/miniconda3/envs/asr/bin/python trainer.py
+           ├─13630 /home/asr/miniconda3/envs/asr/bin/python trainer.py
+           └─13633 /home/asr/miniconda3/envs/asr/bin/python trainer.py
+
+Sep 11 20:24:39 msteam python[13532]: Отсутствует файл 291.18.txt
+Sep 11 20:24:39 msteam python[13532]: Отсутствует файл 295.21.txt
+Sep 11 20:24:39 msteam python[13532]: Отсутствует файл 290.36.txt
+Sep 11 20:24:39 msteam python[13532]: Отсутствует файл 202.2.txt
+Sep 11 20:24:39 msteam python[13532]: Отсутствует файл 222.3.txt
+Sep 11 20:24:42 msteam python[13532]: COMET WARNING: You are trying to log string value as a metric. This is not recommended.
+Sep 11 20:24:43 msteam python[13532]: COMET WARNING: Unknown error exporting current conda environment
+Sep 11 20:24:43 msteam python[13532]: COMET WARNING: Unknown error retrieving Conda package as an explicit file
+Sep 11 20:24:43 msteam python[13532]: COMET WARNING: Unknown error retrieving Conda information
+Sep 11 20:24:43 msteam python[13532]: COMET INFO: Experiment is live on comet.com https://www.comet.com/gumaonelove/tatasr-whisper/84193a6755b84ba297fd18dee876cd1e

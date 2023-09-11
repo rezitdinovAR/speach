@@ -8,7 +8,7 @@ class TatAsr:
     '''Интерфейс взаимодействия с моделями Silero'''
 
     def __init__(
-            self, sample_rate=48000, device='cuda'
+            self, sample_rate=16000, device='cuda'
     ):
         self.sample_rate = sample_rate
         self.pipe = pipeline(
@@ -18,10 +18,10 @@ class TatAsr:
 
     def base64_to_wav(self, base64_data: str):
         decode_string = base64.b64decode(base64_data)
-        temp_wav_file = io.BytesIO()
+        temp_wav_file = 'audio.wav'
         sf.write(temp_wav_file, decode_string, self.sample_rate, format='WAV', subtype='PCM_16')
-        temp_wav_file.seek(0)
         return temp_wav_file
+
 
     async def predict(self, filepath: str) -> dict:
         text = self.pipe(filepath)['text']
