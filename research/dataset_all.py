@@ -13,6 +13,13 @@ class IPS1ASRDataset(Dataset):
         counter = 0
         for filename in os.listdir(self.audio_dir):
             name = os.path.splitext(filename)[0]
+            if not os.path.exists(audio_dir + name + '.txt'):
+                print('Отсутствует файл', name + '.txt')
+                continue
+            if not os.path.exists(audio_dir + name + '.wav'):
+                print(f'Отсутствует файл', name + '.wav')
+                continue
+
             if name not in names:
                 self.data[counter] = {
                     'text': name + '.txt',
