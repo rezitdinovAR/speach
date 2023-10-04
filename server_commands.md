@@ -30,6 +30,7 @@ df -h
 #### Для начала необходимо выполнить сканирование новой конфигурации и передать данные ядру ОС:
 ```bash
 sudo echo 1 > /sys/block/sda/device/rescan
+sudo echo 1 | sudo tee /sys/block/sda/device/rescan
 ```
 #### Далее запустите утилиту parted, которая предназначена для управления жесткими дисками:
 ```bash
@@ -164,8 +165,7 @@ python3.11 --version
 ## Установка Anaconda
 ### Download the latest shell script to Ubuntu 18.04
 ```bash 
-wget https://repo.anaconda.com/archive/Anaconda3-2023.07-2-Linux-x86_64.sh
-```
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh```
 ### Make the miniconda installation script executable
 ```bash
 chmod +x Miniconda3-latest-Linux-x86_64.sh
@@ -275,6 +275,10 @@ dpkg -L libcudnn8
 sudo cp -P /usr/include/cudnn*.h /usr/local/cuda-11.8/include
 sudo cp -P /usr/lib/x86_64-linux-gnu/libcudnn* /usr/local/cuda-11.8/lib64/
 sudo chmod a+r /usr/local/cuda-11.8/lib64/libcudnn*
+
+sudo cp -P cuda/include/cudnn.h /usr/local/cuda-11.8/include
+sudo cp -P cuda/lib/libcudnn* /usr/local/cuda-11.8/lib64/
+sudo chmod a+r /usr/local/cuda-11.8/lib64/libcudnn*
 ```
 ### Перезапустить сервер
 ```bash
@@ -306,3 +310,33 @@ conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvi
 ```bash
 curl -H "Authorization: OAuth YANDEX_DISK_TOKEN" -L -o current_data.rar "https://downloader.disk.yandex.ru/disk/..."
 ```
+### unrar
+```bash
+unrar e file.rar
+```
+
+## nginx
+### ssl
+```bash
+sudo apt-get install certbot
+sudo apt install python-certbot-nginx
+sudo certbot certonly --webroot -d tat-asr.api.tatarby.tugantel.tatar --webroot-path /home/asr/projects/speach/api
+
+tat-asr.api.tatarby.tugantel.tatar
+
+archive_dir = /etc/letsencrypt/archive/tat-asr.api.tatarby.tugantel.tatar
+cert = /etc/letsencrypt/live/tat-asr.api.tatarby.tugantel.tatar/cert.pem
+privkey = /etc/letsencrypt/live/tat-asr.api.tatarby.tugantel.tatar/privkey.pem
+chain = /etc/letsencrypt/live/tat-asr.api.tatarby.tugantel.tatar/chain.pem
+fullchain = /etc/letsencrypt/live/tat-asr.api.tatarby.tugantel.tatar/fullchain.pem
+
+
+tat-tts.api.tatarby.tugantel.tatar
+rus-asr.api.tatarby.tugantel.tatar
+rus-tts.api.tatarby.tugantel.tatar
+```
+
+sudo nano /etc/nginx/sites-available/default
+tts-asr
+
+sudo service nginx restart
